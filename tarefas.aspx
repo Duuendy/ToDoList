@@ -10,11 +10,11 @@
     <asp:TextBox ID="textBoxTarefa" runat="server" Width="131px"></asp:TextBox>
     <br />
     <br />
-    <asp:Button ID="btnInserir" runat="server" OnClick="Button_Cadastrar" Text="Cadastrar" />
+    <asp:Button ID="btnInserir" runat="server" OnClick="Button_Cadastrar" Text="Cadastrar" class="btn btn-dark"/>
     <br />
 <br />
-<asp:Label ID="Label1" runat="server" Text="LISTA DE TAREFAS" Font-Bold="True" Font-Size="X-Large"></asp:Label>
-    <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="True">
+<asp:Label ID="Label1" runat="server" Text="LISTA DE TAREFAS" class="form-check-label"></asp:Label>
+    <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="True" class="table table-striped">
     </asp:GridView>
     <asp:SqlDataSource ID="SqlDataSource1" runat="server"></asp:SqlDataSource>
 <br />

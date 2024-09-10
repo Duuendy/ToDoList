@@ -4,22 +4,28 @@
 
 <html>
 <head runat="server">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <link href="Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
     <title></title>
     <asp:ContentPlaceHolder ID="head" runat="server">
+
     </asp:ContentPlaceHolder>
 </head>
-<body>
+<body class="container-fluid">
     <form id="form1" runat="server">
-        <header> <h1>TO DO LIST</h1></header>
+        <header class="container p-5 my-5 border"> <h1>TO DO LIST</h1></header>
         <nav><asp:Menu ID="Menu1" runat="server" DynamicHorizontalOffset="2" Font-Bold="True" Font-Names="Verdana" Font-Size="Medium" ForeColor="Black" Orientation="Horizontal" StaticSubMenuIndent="15px">
             <DynamicHoverStyle BackColor="#7C6F57" ForeColor="White" />
             <DynamicMenuItemStyle HorizontalPadding="5px" VerticalPadding="2px" />
             <DynamicMenuStyle BackColor="#F7F6F3" />
             <DynamicSelectedStyle BackColor="#5D7B9D" />
             <Items>
-                <asp:MenuItem NavigateUrl="~/index.aspx" Text="HOME" Value="HOME"></asp:MenuItem>
-                <asp:MenuItem Text="TAREFA" Value="NOVO" NavigateUrl="~/tarefas.aspx"></asp:MenuItem>
+                <asp:MenuItem NavigateUrl="~/index.aspx" Text="HOME" Value="HOME" ></asp:MenuItem>
+                <asp:MenuItem Text="TAREFA" Value="NOVO" NavigateUrl="~/tarefas.aspx" ></asp:MenuItem>
             </Items>
             <StaticHoverStyle BackColor="#7C6F57" ForeColor="White" />
             <StaticMenuItemStyle HorizontalPadding="5px" VerticalPadding="2px" />

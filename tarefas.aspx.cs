@@ -27,47 +27,55 @@ namespace ToDoList
             }
         }
 
-        protected void SqlDataSource1_Updated(object sender, SqlDataSourceStatusEventArgs e)
-        {
-            if (e.Exception != null)
-            {
-                LabelMensage.Text = "Informação Alterada";
-                e.ExceptionHandled = true;
-            }
-        }
-
-        protected void SqlDataSource1_Deleted(object sender, SqlDataSourceStatusEventArgs e)
-        {
-            if (e.Exception != null)
-            {
-                LabelMensage.Text = "Informação Deletada";
-                e.ExceptionHandled = true;
-            }
-        }
-
         protected void Button_Cadastrar(object sender, EventArgs e)
         {
-            // Conectar ao banco de dados e inserir os dados
+            string novaTarefa = textBoxTarefa.Text.Trim();
+
+            // Verificar se o campo tarefa está vazio
+            if (string.IsNullOrEmpty(novaTarefa))
+            {
+                LabelMensage.Text = "O campo tarefa não ser vazio.";
+                LabelMensage.Visible = true;
+                return;
+            }
+
             string connString = Connection.ConnectionString;
             using (var conexao = new MySqlConnection(connString))
             {
                 try
                 {
                     conexao.Open();
+
+                    // Verificar se o valor já existe no banco de dados
+                    using (var verificaComando = new MySqlCommand("SELECT COUNT(*) FROM tarefas WHERE tarefa = @tarefa", conexao))
+                    {
+                        verificaComando.Parameters.AddWithValue("@tarefa", novaTarefa);
+                        int count = Convert.ToInt32(verificaComando.ExecuteScalar());
+
+                        if (count > 0)
+                        {
+                            LabelMensage.Text = "A tarefa já existe no banco de dados.";
+                            LabelMensage.Visible = true;
+                            return;
+                        }
+                    }
+
+                    // Se não for duplicado, inserir o novo valor
                     using (var comando = new MySqlCommand("INSERT INTO tarefas (tarefa) VALUES (@tarefa)", conexao))
                     {
-                        // Adicionar parâmetros ao comando
-                        //comando.Parameters.AddWithValue("@data", textBoxData.Text);
-                        comando.Parameters.AddWithValue("@tarefa", textBoxTarefa.Text);
-
-                        // Executar a inserção
+                        comando.Parameters.AddWithValue("@tarefa", novaTarefa);
                         comando.ExecuteNonQuery();
                     }
+
+                    // Exibir mensagem de sucesso
+                    LabelMensage.Text = "Tarefa cadastrada com sucesso!";
+                    LabelMensage.Visible = true;
                 }
                 catch (Exception ex)
                 {
                     // Tratar exceções, se necessário
-                    Console.WriteLine(ex.Message);
+                    LabelMensage.Text = "Ocorreu um erro ao cadastrar a tarefa: " + ex.Message;
+                    LabelMensage.Visible = true;
                 }
                 finally
                 {
@@ -79,7 +87,6 @@ namespace ToDoList
             // Atualizar o GridView após a inserção dos dados
             BindGridView();
         }
-
         private void BindGridView()
         {
             // Conectar ao banco de dados e carregar os dados no GridView
